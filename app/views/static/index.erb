@@ -1,2 +1,15 @@
-<h1>Hello World</h1>
-<p>See Me in views/static/index.html.erb</p>
+<h1>Welcome to AirBnB on demand</h1>
+<h3>Convenient booking for TONIGHT!</h3>
+
+<h2>Please log in: </h2>
+<form action="/session" method="post">
+  Username:<input type="text" name="username"><br>
+  Password:<input type="password" name="password">
+  <input type="submit" value="Log in">
+</form>
+<p id="container"><%= @nonexist_message %></p><p id="container"><%= @error %></p>
+
+<h3>Are you new to AirBnB?</h3>
+<form action="/users/new" method="get">
+  <input type="submit" value="Sign up!">
+</form>

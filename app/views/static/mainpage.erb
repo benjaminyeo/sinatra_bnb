@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<nav>
+  <ul>
+    <li><a href="/users/<%= session[:user_id] %>">Home</a></li>
+    <li><a href="/properties/new">Post new listings</a></li>
+    <li><a href="/bookings/show">My Bookings</a></li>
+    <form action="/users/logout" method="post">
+      <input type="submit" value="Logout">
+    </form>
+  </ul>
+</nav>
+<section>
+  <table border="1">
+    <tr>
+      <td>
+        <h1>Property</h1>
+      </td>
+      <td>
+        <h1>Location</h1>
+      </td>
+      <td>
+        <h1>Listed by</h1>
+      </td>
+      <td>
+        <h1>Date posted</h1>
+      </td>
+      <td>
+        <h1>Availability</h1>
+        <p>Available: O</p>
+        <p>Unavailable: X</p>
+      </td>
+      <td>
+        <h1>Action</h1>
+      </td>
+    </tr>
+    <% @properties.each do |p|%>
+        <tr>
+          <td>
+            <p><%= p.name %></p>
+          </td>
+          <td>
+            <p><%= p.location %></p>
+          </td>
+          <td>
+            <p><%= User.find(p.user.id).username %></p>
+          </td>
+          <td>
+            <p><%= p.created_at %></p>
+          </td>
+          <td>
+            <p><%= p.availability %></p>
+          </td>
+          <td>
+            <ul>
+              <li><a href="/properties/<%= p.id %>">View</a></li>
+              <li><a href="/bookings/new">Book</a></li>
+            </ul>
+          </td>
+        </tr>
+    <% end %>
+
+  </table>
+</section>
+</body>
+
+</html>
+

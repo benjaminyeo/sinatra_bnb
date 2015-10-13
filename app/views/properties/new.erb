@@ -1,0 +1,32 @@
+<h1>This is create new prop</h1>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<nav>
+  <ul>
+    <li><a href="/users/<%= session[:user_id] %>">Home</a></li>
+    <li><a href="/properties/new">Post new listings</a></li>
+    <li><a href="/bookings/show">My Bookings</a></li>
+  </ul>
+</nav>
+<section>
+  <form action="/properties" method="post">
+    <div>
+      <label>Property:</label>
+      <input type="text" name="name" placeholder="Type your property name"</input>
+    </div>
+    <div>
+      <label>Location :</label>
+      <input type="text" name="location" placeholder="Type your Location">
+    </div>
+    <div>
+      <label>Availability: </label>
+      <input type="text" name="availability" placeholder="O / X" />
+    </div>
+    <input type="submit" value="Create!">
+  </form>
+</section>

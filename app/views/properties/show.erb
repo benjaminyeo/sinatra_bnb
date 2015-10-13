@@ -1,0 +1,45 @@
+<h1>This is show</h1>
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<nav>
+  <ul>
+    <li><a href="/users/<%= session[:user_id] %>">Home</a></li>
+    <li><a href="/bookings/new">Book</a></li>
+    <li><a href="bookings/show">My Bookings</a></li>
+  </ul>
+</nav>
+<section>
+  <div>
+    <h1>Property: </h1>
+    <p><%= @prop.find(params[:id]).name %></p>
+  </div>
+  <div>
+    <h3>Location: </h3>
+    <p><%= @prop.find(params[:id]).location %></p>
+  </div>
+  <div>
+    <h4>Date Created:</h4>
+    <p><%= @prop.find(params[:id]).created_at %></p>
+  </div>
+  <div>
+    <h3>Listed by:</h3>
+    <p><%= @prop.find(params[:id]).user.username %></p>
+  </div>
+  <div>
+    <ul>
+      <p>If you are the listed this, you are able to edit</p>
+      <li><a href="/properties/<%= params[:id] %>/edit">Edit</a></li>
+    </ul>
+  </div>
+  <div>
+    <h1>Reviews: </h1>
+    <li><a href="/bookings/new/">Make a review for this property</a></li>
+    <!-- review.each.do show -->
+  </div>
+</section>
+</body>
+
+</html>

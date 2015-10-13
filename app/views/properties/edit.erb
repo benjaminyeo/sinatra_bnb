@@ -1,0 +1,32 @@
+<h1>This is edit property</h1>
+
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<nav>
+  <ul>
+    <li><a href="/users/<%= session[:user_id] %>">Home</a></li>
+    <li><a href="/properties/new">Post new listings</a></li>
+    <li><a href="/bookings/show">My Bookings</a></li>
+  </ul>
+</nav>
+<section>
+  <form action="/properties/<%@current_property%> method="post">
+    <div>
+      <label>Property:</label>
+      <input name="property[name]" placeholder="Type your post" value="Edit name"</input>
+    </div>
+    <div>
+      <label>Location :</label>
+      <input type="text" name="property[location]" placeholder="Type your category" value="Edit Location">
+    </div>
+    <div>
+      <label>Availability: </label>
+      <input type="text" name="property[availability]" value="Edit availability (O/X)" />
+    </div>
+    <input type="submit" name="decision" value="edit">
+    <input type="submit" name="decision" value="delete">
+  </form>
+</section>
