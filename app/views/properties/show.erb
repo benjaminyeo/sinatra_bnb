@@ -1,4 +1,3 @@
-<h1>This is show</h1>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,38 +7,85 @@
   <ul>
     <li><a href="/users/<%= session[:user_id] %>">Home</a></li>
     <li><a href="/bookings/new">Book</a></li>
-    <li><a href="bookings/show">My Bookings</a></li>
+    <li><a href="/users/<%= session[:user_id] %>/mybookings">My Bookings</a></li>
   </ul>
 </nav>
 <section>
-  <div>
-    <h1>Property: </h1>
-    <p><%= @prop.find(params[:id]).name %></p>
-  </div>
-  <div>
-    <h3>Location: </h3>
-    <p><%= @prop.find(params[:id]).location %></p>
-  </div>
-  <div>
-    <h4>Date Created:</h4>
-    <p><%= @prop.find(params[:id]).created_at %></p>
-  </div>
-  <div>
-    <h3>Listed by:</h3>
-    <p><%= @prop.find(params[:id]).user.username %></p>
-  </div>
-  <div>
-    <ul>
-      <p>If you are the listed this, you are able to edit</p>
-      <li><a href="/properties/<%= params[:id] %>/edit">Edit</a></li>
-    </ul>
-  </div>
-  <div>
-    <h1>Reviews: </h1>
-    <li><a href="/bookings/new/">Make a review for this property</a></li>
+  <table border="1">
+    <tr>
+      <td>
+        <h1>Property</h1>
+      </td>
+      <td>
+        <h1>Location</h1>
+      </td>
+      <td>
+        <h1>Listed by</h1>
+      </td>
+      <td>
+        <h1>Date posted</h1>
+      </td>
+      <td>
+        <h1>Availability</h1>
+        <h1>Today</h1>
+        <p>Available: O</p>
+        <p>Unavailable: X</p>
+      </td>
+      <td>
+        <h1>Action</h1>
+      </td>
+    </tr>
+        <tr>
+          <td>
+            <p><%= @prop.find(params[:id]).name %></p>
+          </td>
+          <td>
+            <p><%= @prop.find(params[:id]).location %></p>
+          </td>
+          <td>
+            <p><%= @prop.find(params[:id]).user.username %></p>
+          </td>
+          <td>
+            <p><%= @prop.find(params[:id]).created_at %></p>
+          </td>
+          <td>
+            <p><%= @prop.find(params[:id]).availability %></p>
+          </td>
+          <td>
+            <ul>
+              <% if @prop.find(params[:id]).availability == "O" %>
+                  <li><a href="/users/<%= Property.find(params[:id]).user_id %>/property/<%= params[:id] %>/bookings/new">Book</a></li>
+              <% else %> Already Booked
+              <% end %>
+              <% if Property.find(params[:id]).user_id == session[:user_id]  %>
+                  <li><a href="/properties/<%= params[:id] %>/edit">Edit</a></li>
+              <% end %>
+            </ul>
+          </td>
+        </tr>
+  </table>
+</section>
+<h1>Reviews: </h1>
+<div>
+  <form action="/users/<%= session[:user_id] %>/property/<%= params[:id]%>/comments" method="post">
+    <textarea name="body" placeholder="Type your review"></textarea>
+    <input type="submit" value="Submit">
     <!-- review.each.do show -->
-  </div>
+  </form>
+</div>
+<section border="1">
+  <% Property.find(@property_id).comments.all.each do |c| %>
+      <ul>
+        <%= c.body %> --- <em>commented by <%= User.find(c.user_id).username  %></em>
+        <% if session[:user_id] == c.user_id %>
+            <a href="comments/<%= c.id %>/edit">Edit</a>
+            </ul>
+        <% end %>
+  <% end %>
+</section>
 </section>
 </body>
+
+</html>
 
 </html>

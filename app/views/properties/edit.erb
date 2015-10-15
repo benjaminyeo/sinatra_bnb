@@ -13,18 +13,18 @@
   </ul>
 </nav>
 <section>
-  <form action="/properties/<%@current_property%> method="post">
+  <form action="/properties/<%= params[:id] %>" method="post">
     <div>
       <label>Property:</label>
-      <input name="property[name]" placeholder="Type your post" value="Edit name"</input>
+      <input type="text" name="name" placeholder="Edit your property name" value="<%= Property.find(params[:id]).name %>"></input>
     </div>
     <div>
       <label>Location :</label>
-      <input type="text" name="property[location]" placeholder="Type your category" value="Edit Location">
+      <input type="text" name="location" placeholder="Edit your location" value="<%= Property.find(params[:id]).location %>"/>
     </div>
     <div>
       <label>Availability: </label>
-      <input type="text" name="property[availability]" value="Edit availability (O/X)" />
+      <input type="text" name="availability" placeholder="Edit availability (O/X)" value="<%= Property.find(params[:id]).availability  %>" />
     </div>
     <input type="submit" name="decision" value="edit">
     <input type="submit" name="decision" value="delete">

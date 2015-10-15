@@ -5,7 +5,7 @@ class Property < ActiveRecord::Base
   has_many :bookings
 
   def self.authenticate? (current_userid, current_propertyid)
-      return true if current_userid == Property.find(current_propertyid).user_id
+      return true if current_userid.to_i == Property.find(current_propertyid).user_id
       return false
     end
   end

@@ -1,0 +1,60 @@
+<h1>This is show</h1>
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<nav>
+  <ul>
+    <li><a href="/users/<%= session[:user_id] %>">Home</a></li>
+    <li><a href="/bookings/new">Book</a></li>
+    <li><a href="/users/<%= session[:user_id] %>/mybookings">My Bookings</a></li>
+  </ul>
+</nav>
+<section>
+
+  <div>
+    <h1>Property: </h1>
+    <p><%= @prop.find(params[:id]).name %></p>
+  </div>
+  <div>
+    <h3>Location: </h3>
+    <p><%= @prop.find(params[:id]).location %></p>
+  </div>
+  <div>
+    <h4>Date Created:</h4>
+    <p><%= @prop.find(params[:id]).created_at %></p>
+  </div>
+  <div>
+    <h3>Listed by:</h3>
+    <p><%= @prop.find(params[:id]).user.username %></p>
+  </div>
+  <div>
+    <ul>
+      <p> You can edit this is if you listed this</p>
+      <li><a href="/properties/<%= params[:id] %>/edit">Edit</a></li>
+    </ul>
+  </div>
+  <div>
+    <h1>Reviews: </h1>
+    <div>
+      <form action="/users/<%= session[:user_id] %>/property/<%= params[:id]%>/comments" method="post">
+      <textarea name="body" placeholder="Type your review"></textarea>
+        <input type="submit" value="Submit">
+    <!-- review.each.do show -->
+      </form>
+    </div>
+     <section border="1">
+        <% Property.find(@property_id).comments.all.each do |c| %>
+      <ul>
+        <%= c.body %> --- <em>commented by <%= User.find(c.user_id).username  %></em>
+        <% if session[:user_id] == c.user_id %>
+        <a href="comments/<%= c.id %>/edit">Edit</a>
+      </ul>
+            <% end %>
+       <% end %>
+     </section>
+</section>
+</body>
+
+</html>

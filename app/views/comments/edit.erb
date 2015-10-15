@@ -1,0 +1,10 @@
+<div>
+  <label>Review :</label>
+  <form action="/users/<%= @current_comment.user_id %>/property/<%=@current_comment.property_id%>/comments/<%=@current_comment_id%>" method="post">
+  <textarea name="body" placeholder="Edit your post"><%= Comment.find(params[:id]).body %></textarea>
+    <div>
+    <input type="submit" name="decision" value="edit">
+    <input type="submit" name="decision" value="delete">
+    </div>
+  </form>
+<div>

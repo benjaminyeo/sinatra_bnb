@@ -1,0 +1,10 @@
+<div>
+  <label>Booking :</label>
+  <form action="/users/<%= @current_booking.user_id %>/property/<%=@current_booking.property_id%>/bookings/<%=@current_booking_id%>" method="post">
+    <textarea name="message" placeholder="Edit your message"><%= Booking.find(@current_booking_id).message %></textarea>
+    <div>
+      <input type="submit" name="decision" value="edit message">
+      <input type="submit" name="decision" value="delete">
+    </div>
+  </form>
+  <div>

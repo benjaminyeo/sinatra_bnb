@@ -21,7 +21,6 @@ post '/users' do
               @error_message = "password must be 4 to 10 characters long"
               erb :'users/error'
             else
-              @message = "Thank you for signing up, you can now log in."
               redirect to '/'
             end
        end
@@ -35,16 +34,17 @@ post '/session' do
       redirect to "/users/#{session[:user_id]}"
     else
       @error = 'Invalid password'
-      "Incorrect Password"
+      erb :'static/index'
     end
   else
-    @nonexist_message = "This username does not exist."
-    erb :'/'
+     @error = "This username does not exist."
+      erb :'static/index'
   end
 end
 
 get '/users/:id' do
   @properties = Property.all
+  @user_id = session[:user_id]
   erb :'static/mainpage'
 end
 
@@ -54,60 +54,5 @@ post '/users/logout' do
 end
 
 
-#------------------------------------------------------------------------
-#Properties
 
 
-#New properties
-get '/properties/new' do
-  erb :'properties/new'
-end
-
-#show property
-get '/properties/:id' do
-  @prop = Property.all
-  erb :'properties/show'
-end
-
-
-
-#create property
-post '/properties' do
-  id = session[:user_id]
-  Property.create(name: params[:name], location: params[:location], availability: params[:availability], user_id: id)
-  redirect to "/users/#{session[:user_id]}"
-end
-
-#Edit
-get '/properties/:id/edit' do
-  # if Property.authenticate?(session[:user_id], id)
-  @current_property = params[:id]
-  erb :'properties/edit'
-  # else
-  #   "You didn't list this bro"
-end
-
-#Update
-post '/properties/:id' do
-  id = params[:id]
-  byebug
-  if params[:decision] == 'edit'
-      Property.find(params[:id]).update(params[:property])
-      redirect to "/properties/#{params[:id]}"
-  elsif params[:decision] == 'delete'
-    Post.find(id).delete
-    redirect to '/'
-  end
-end
-
-
-
-#-------------------------------------------------------------------------------
-#Booking
-get '/bookings/new' do
-  erb :'bookings/new'
-end
-
-get '/bookings/show' do
-  erb :'bookings/mybooking'
-end

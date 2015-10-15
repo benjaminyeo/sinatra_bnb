@@ -1,2 +1,11 @@
-<h1>Book me!</h1>
+<h1> Booking for:</h1> <h4>Property name: <%= Property.find(@property_id).name %> </h4>
+<h2> Date: <%= Time.now %> </h2>
 
+<form action="/users/<%= @user_id %>/property/<%= @property_id %>/bookings/create" method="post">
+
+  <label>Say something to the host!</label>
+  <div>
+  <textarea name="message" placeholder="any special request or enquiries?"></textarea>
+  </div>
+  <input type="submit" name="decision" value="Book!"/>
+</form>

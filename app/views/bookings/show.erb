@@ -13,8 +13,11 @@
     </form>
   </ul>
 </nav>
-<h1>You are logged in as <%= User.find(@user_id).username %></h1>
+<h1> My Bookings</h1>
 <section>
+  <% if @mybookings.count == 0 %>
+      <h1 id="error">You have no bookings :(</h1>
+      <% end %>
   <table border="1">
     <tr>
       <td>
@@ -24,48 +27,39 @@
         <h1>Location</h1>
       </td>
       <td>
+        <h1>Booked for</h1>
+      </td>
+      <td>
         <h1>Listed by</h1>
       </td>
       <td>
-        <h1>Date posted</h1>
-      </td>
-      <td>
-        <h1>Availability</h1>
-        <h1>Today</h1>
-        <p>Available: O</p>
-        <p>Unavailable: X</p>
+        <h1>Your message</h1>
       </td>
       <td>
         <h1>Action</h1>
       </td>
     </tr>
-    <% @properties.each do |p|%>
+    <% @mybookings.each do |p|%>
         <tr>
           <td>
-            <p><%= p.name %></p>
+            <p><%= Property.find(p.property_id).name %></p>
           </td>
           <td>
-            <p><%= p.location %></p>
+            <p><%= Property.find(p.property_id).name %></p>
           </td>
           <td>
-            <p><%= User.find(p.user.id).username %></p>
+            <p><%= p.date %></p>
           </td>
           <td>
-            <p><%= p.created_at %></p>
+            <p><%= User.find(Property.find(p.property_id).user_id).username %></p>
           </td>
           <td>
-            <p><%= p.availability %></p>
+            <p><%=p.message%></p>
           </td>
           <td>
             <ul>
-              <li><a href="/properties/<%= p.id %>">View</a></li>
-              <% if p.availability == "O" %>
-              <li><a href="/users/<%= session[:user_id]%>/property/<%= p.id %>/bookings/new">Book</a></li>
-                  <% else %> Already Booked
-             <% end %>
-              <% if p.user_id == session[:user_id]  %>
-                  <li><a href="/properties/<%= params[:id] %>/edit">Edit</a></li>
-              <% end %>
+              <li><a href="/properties/<%= p.property_id %>">View Property</a></li>
+              <li><a href="/users/<%=session[:user_id]%>/property/<%= p.property_id %>/bookings/<%=p.id%>/edit">Edit</a></li>
             </ul>
           </td>
         </tr>
@@ -76,4 +70,5 @@
 </body>
 
 </html>
+
 
